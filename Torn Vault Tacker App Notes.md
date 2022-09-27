@@ -1,8 +1,0 @@
-# Torn Vault Tacker App Notes
-
-### API calls
-* https://api.torn.com/user/?selections=money&key=\<key>
-    * Vault total: vault_amount
-* https://api.torn.com/user/?selections=log&key=\<key>
-    * "title": "Vault withdraw"
-
