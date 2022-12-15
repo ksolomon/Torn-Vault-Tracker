@@ -5,9 +5,9 @@ $zarURL  = 'https://api.torn.com/user/?selections=log&key=LDtibInYMdgVnM9n';
 $zarLog  = json_decode(file_get_contents($zarURL));
 $zarData = $zarLog->log;
 
-$symURL  = 'https://api.torn.com/user/?selections=log&key=';
-// $symLog  = json_decode(file_get_contents($symURL));
-// $symData = $symLog->log;
+$symURL  = 'https://api.torn.com/user/?selections=log&key=lne9TZLuqvFXtK3V';
+$symLog  = json_decode(file_get_contents($symURL));
+$symData = $symLog->log;
 
 $zarVault = [];
 $symVault = [];
