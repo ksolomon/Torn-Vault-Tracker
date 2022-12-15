@@ -35,7 +35,7 @@ foreach ($zarData as $entry) {
 		$csvComp = searchForId($entry->timestamp, $csv);
 
 		if ($csvComp) {
-			echo "Entry ".$entry->timestamp.' already in vault';
+			echo "Entry " . $entry->timestamp . ' already in vault';
 		}
 		// fputcsv($fp, $zarVault[i]);
 	} elseif ($entry->log == 5850) {
@@ -49,7 +49,39 @@ foreach ($zarData as $entry) {
 		if ($csvComp) {
 			echo "Entry " . $entry->timestamp . ' already in vault';
 		}
+	} else {
+		continue;
+	}
 
+	$i++;
+}
+
+$i = 0;
+
+foreach ($symData as $entry) {
+	if ($entry->log == 5851) {
+		$symVault[$i]['user']      = 'Zarathos';
+		$symVault[$i]['timestamp'] = $entry->timestamp;
+		$symVault[$i]['operation'] = $entry->title;
+		$symVault[$i]['amount']    = $entry->data->withdrawn;
+
+		$csvComp = searchForId($entry->timestamp, $csv);
+
+		if ($csvComp) {
+			echo "Entry " . $entry->timestamp . ' already in vault';
+		}
+		// fputcsv($fp, $zarVault[i]);
+	} elseif ($entry->log == 5850) {
+		$symVault[$i]['user']      = 'Zarathos';
+		$symVault[$i]['timestamp'] = $entry->timestamp;
+		$symVault[$i]['operation'] = $entry->title;
+		$symVault[$i]['amount']    = $entry->data->deposited;
+
+		$csvComp = searchForId($entry->timestamp, $csv);
+
+		if ($csvComp) {
+			echo "Entry " . $entry->timestamp . ' already in vault';
+		}
 	} else {
 		continue;
 	}
