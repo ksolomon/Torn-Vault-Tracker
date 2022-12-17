@@ -1,76 +1,5 @@
 <?php
-setlocale(LC_MONETARY, "en_US");
 include('functions.php');
-
-// Open CSV file in read & append mode ('a+')
-$fp = fopen('vault.csv', 'a+');
-
-$csvVault = [];
-$csv = array();
-
-$lines = file('vault.csv', FILE_IGNORE_NEW_LINES);
-
-foreach ($lines as $key => $value) {
-		$csv[$key] = str_getcsv($value);
-}
-
-function getLog($user) {
-	$tornURL = 'https://api.torn.com/user/?selections=log&key=';
-	$i = 0;
-
-	if ($user == 'zarathos') {
-		$usrKey = 'LDtibInYMdgVnM9n';
-	} else {
-		$usrKey = 'lne9TZLuqvFXtK3V';
-	}
-
-	$usrURL = $tornURL.$usrKey;
-	$usrLog  = json_decode(file_get_contents($usrURL));
-	$usrData = $usrLog->log;
-	$usrVault = [];
-
-	foreach ($usrData as $entry) {
-		if ($entry->log == 5851) {
-			$usrVault[$i]['user']      = $user;
-			$usrVault[$i]['timestamp'] = $entry->timestamp;
-			$usrVault[$i]['operation'] = $entry->title;
-			$usrVault[$i]['amount']    = $entry->data->withdrawn;
-
-			$csvComp = searchForId($entry->timestamp, $csv);
-
-			if ($csvComp) {
-				echo 'Withdrawal (ID: ' . $entry->timestamp . ') already in vault';
-			}
-
-			// fputcsv($fp, $usrVault[i]);
-		} elseif ($entry->log == 5850) {
-			$usrVault[$i]['user']      = $user;
-			$usrVault[$i]['timestamp'] = $entry->timestamp;
-			$usrVault[$i]['operation'] = $entry->title;
-			$usrVault[$i]['amount']    = $entry->data->deposited;
-
-			$csvComp = searchForId($entry->timestamp, $csv);
-
-			if ($csvComp) {
-				echo 'Deposit (ID: ' . $entry->timestamp . ') already in vault';
-			}
-		} else {
-			continue;
-		}
-
-		$i++;
-	}
-
-	return $usrVault;
-}
-
-// Loop through file pointer and a line
-// foreach ($zarVault as $fields) {
-// 	fputcsv($fp, $fields);
-// }
-
-fclose($fp);
-
 ?>
 
 <!DOCTYPE html>
@@ -97,21 +26,27 @@ fclose($fp);
 		</thead>
 
 		<?php
-		setlocale(LC_MONETARY, "en_US");
+		// Sort the multidimensional array
+		usort($csv, "custom_sort");
 
-		foreach ($zarVault as $entry) {
+		// Define the custom sort function
+		function custom_sort($a, $b) {
+			return $a[1] > $b[1];
+		}
+
+		foreach ($csv as $entry) {
 			echo '<tr>';
 			echo '<td>';
-			echo $entry['user'];
+			echo $entry[0];
 			echo '</td>';
 			echo '<td>';
-			echo date("d/m/Y", $entry['timestamp']);
+			echo date("d/m/Y", $entry[1]);
 			echo '</td>';
 			echo '<td>';
-			echo $entry['operation'];
+			echo $entry[2];
 			echo '</td>';
 			echo '<td>';
-			echo formatMoney($entry['amount']);
+			echo formatMoney($entry[3]);
 			echo '</td>';
 			echo '</tr>';
 		}
