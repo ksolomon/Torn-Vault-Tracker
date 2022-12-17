@@ -1,0 +1,13 @@
+table, tr, td {
+  border: 1px solid #333;
+  border-collapse: collapse;
+}
+
+thead td {
+  font-weight: bold;
+  padding: .15em 1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+td { padding: .15em 1em; }

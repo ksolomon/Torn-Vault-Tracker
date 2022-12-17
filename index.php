@@ -1,92 +1,67 @@
 <?php
 setlocale(LC_MONETARY, "en_US");
-
-$zarURL  = 'https://api.torn.com/user/?selections=log&key=LDtibInYMdgVnM9n';
-$zarLog  = json_decode(file_get_contents($zarURL));
-$zarData = $zarLog->log;
-
-$symURL  = 'https://api.torn.com/user/?selections=log&key=lne9TZLuqvFXtK3V';
-$symLog  = json_decode(file_get_contents($symURL));
-$symData = $symLog->log;
-
-$zarVault = [];
-$symVault = [];
-$csvVault = [];
+include('functions.php');
 
 // Open CSV file in read & append mode ('a+')
 $fp = fopen('vault.csv', 'a+');
 
+$csvVault = [];
 $csv = array();
+
 $lines = file('vault.csv', FILE_IGNORE_NEW_LINES);
 
 foreach ($lines as $key => $value) {
 		$csv[$key] = str_getcsv($value);
 }
 
-$i = 0;
+function getLog($user) {
+	$tornURL = 'https://api.torn.com/user/?selections=log&key=';
+	$i = 0;
 
-foreach ($zarData as $entry) {
-	if ($entry->log == 5851) {
-		$zarVault[$i]['user']      = 'Zarathos';
-		$zarVault[$i]['timestamp'] = $entry->timestamp;
-		$zarVault[$i]['operation'] = $entry->title;
-		$zarVault[$i]['amount']    = $entry->data->withdrawn;
-
-		$csvComp = searchForId($entry->timestamp, $csv);
-
-		if ($csvComp) {
-			echo "Entry " . $entry->timestamp . ' already in vault';
-		}
-		// fputcsv($fp, $zarVault[i]);
-	} elseif ($entry->log == 5850) {
-		$zarVault[$i]['user']      = 'Zarathos';
-		$zarVault[$i]['timestamp'] = $entry->timestamp;
-		$zarVault[$i]['operation'] = $entry->title;
-		$zarVault[$i]['amount']    = $entry->data->deposited;
-
-		$csvComp = searchForId($entry->timestamp, $csv);
-
-		if ($csvComp) {
-			echo "Entry " . $entry->timestamp . ' already in vault';
-		}
+	if ($user == 'zarathos') {
+		$usrKey = 'LDtibInYMdgVnM9n';
 	} else {
-		continue;
+		$usrKey = 'lne9TZLuqvFXtK3V';
 	}
 
-	$i++;
-}
+	$usrURL = $tornURL.$usrKey;
+	$usrLog  = json_decode(file_get_contents($usrURL));
+	$usrData = $usrLog->log;
+	$usrVault = [];
 
-$i = 0;
+	foreach ($usrData as $entry) {
+		if ($entry->log == 5851) {
+			$usrVault[$i]['user']      = $user;
+			$usrVault[$i]['timestamp'] = $entry->timestamp;
+			$usrVault[$i]['operation'] = $entry->title;
+			$usrVault[$i]['amount']    = $entry->data->withdrawn;
 
-foreach ($symData as $entry) {
-	if ($entry->log == 5851) {
-		$symVault[$i]['user']      = 'Zarathos';
-		$symVault[$i]['timestamp'] = $entry->timestamp;
-		$symVault[$i]['operation'] = $entry->title;
-		$symVault[$i]['amount']    = $entry->data->withdrawn;
+			$csvComp = searchForId($entry->timestamp, $csv);
 
-		$csvComp = searchForId($entry->timestamp, $csv);
+			if ($csvComp) {
+				echo 'Withdrawal (ID: ' . $entry->timestamp . ') already in vault';
+			}
 
-		if ($csvComp) {
-			echo "Entry " . $entry->timestamp . ' already in vault';
+			// fputcsv($fp, $usrVault[i]);
+		} elseif ($entry->log == 5850) {
+			$usrVault[$i]['user']      = $user;
+			$usrVault[$i]['timestamp'] = $entry->timestamp;
+			$usrVault[$i]['operation'] = $entry->title;
+			$usrVault[$i]['amount']    = $entry->data->deposited;
+
+			$csvComp = searchForId($entry->timestamp, $csv);
+
+			if ($csvComp) {
+				echo 'Deposit (ID: ' . $entry->timestamp . ') already in vault';
+			}
+		} else {
+			continue;
 		}
-		// fputcsv($fp, $zarVault[i]);
-	} elseif ($entry->log == 5850) {
-		$symVault[$i]['user']      = 'Zarathos';
-		$symVault[$i]['timestamp'] = $entry->timestamp;
-		$symVault[$i]['operation'] = $entry->title;
-		$symVault[$i]['amount']    = $entry->data->deposited;
 
-		$csvComp = searchForId($entry->timestamp, $csv);
-
-		if ($csvComp) {
-			echo "Entry " . $entry->timestamp . ' already in vault';
-		}
-	} else {
-		continue;
+		$i++;
 	}
 
-	$i++;
+	return $usrVault;
 }
 
 // Loop through file pointer and a line
@@ -95,31 +70,6 @@ foreach ($symData as $entry) {
 // }
 
 fclose($fp);
-
-function searchForId($id, $array) {
-	foreach ($array as $key => $val) {
-		if ($val[1] == $id) {
-			return $key;
-		}
-	}
-
-	return null;
-}
-
-function formatMoney($number, $cents = 1) { // cents: 0=never, 1=if needed, 2=always
-	if (is_numeric($number)) { // a number
-		if (!$number) { // zero
-			$money = ($cents == 2 ? '0.00' : '0'); // output zero
-		} else { // value
-			if (floor($number) == $number) { // whole number
-				$money = number_format($number, ($cents == 2 ? 2 : 0)); // format
-			} else { // cents
-				$money = number_format(round($number, 2), ($cents == 0 ? 0 : 2)); // format
-			} // integer or decimal
-		} // value
-		return '$' . $money;
-	} // numeric
-} // formatMoney
 
 ?>
 
@@ -132,25 +82,7 @@ function formatMoney($number, $cents = 1) { // cents: 0=never, 1=if needed, 2=al
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Torn Vault Tracker</title>
 
-	<style>
-		table,
-		tr,
-		td {
-			border: 1px solid #333;
-			border-collapse: collapse;
-		}
-
-		thead td {
-			font-weight: bold;
-			padding: .15em 1em;
-			text-align: center;
-			text-transform: uppercase;
-		}
-
-		td {
-			padding: .15em 1em;
-		}
-	</style>
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
