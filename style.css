@@ -1,3 +1,11 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
 table, tr, td {
   border: 1px solid #333;
   border-collapse: collapse;
@@ -9,5 +17,9 @@ thead td {
   text-align: center;
   text-transform: uppercase;
 }
+
+tr.debit { background-color: #f77e82; }
+
+tr.credit { background-color: #08817d; color: #fff; }
 
 td { padding: .15em 1em; }

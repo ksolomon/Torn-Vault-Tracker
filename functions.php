@@ -4,6 +4,7 @@ setlocale(LC_MONETARY, "en_US");
 // Open CSV file in read & append mode ('a+')
 $fp = fopen('vault.csv', 'a+');
 
+// Read transactions from CSV
 $csvVault = [];
 $csv      = [];
 
@@ -13,11 +14,14 @@ foreach ($lines as $key => $value) {
   $csv[$key] = str_getcsv($value);
 }
 
+// Get user log entries
 $zarTxn = getLog('zarathos', $csv);
 $symTxn = getLog('symos', $csv);
 
+// Merge user arrays into transaction array
 $txnVault = array_merge($zarTxn, $symTxn);
 
+// Build array of entries not already in the CSV
 foreach ($txnVault as $key => $value) {
   $csvComp = searchForId($value['timestamp'], $csv);
 
@@ -26,12 +30,20 @@ foreach ($txnVault as $key => $value) {
   }
 }
 
-// Loop through file pointer and add a line
+// Store new trasnactions in CSV
 foreach ($csvVault as $fields) {
 	fputcsv($fp, $fields);
 }
 
 fclose($fp);
+
+// Sort the CSV array
+usort($csv, "custom_sort");
+
+// Define the custom sort function
+function custom_sort($a, $b) {
+  return $a[1] > $b[1];
+}
 
 // searchForID(): Serach CSV array for timestamp ID
 function searchForId($id, $array) {
@@ -58,11 +70,18 @@ function formatMoney($number, $cents = 1) {
       }
     }
 
-    return '$' . $money;
+    if (substr($number,0,1) == '-') {
+      $money = ltrim($money, '-');
+      $sign = '-$';
+    } else {
+      $sign = '$';
+    }
+
+    return $sign.$money;
   }
 }
 
-// getLog(): Get log entries for user. Uses CSV array for dupe checking.  Returns array.
+// getLog(): Get log entries for user. Returns array.
 function getLog($user, $csv) {
   $tornURL = 'https://api.torn.com/user/?selections=log&key=';
   $i = 0;
@@ -85,26 +104,12 @@ function getLog($user, $csv) {
       $usrVault[$i]['user']      = $user;
       $usrVault[$i]['timestamp'] = $entry->timestamp;
       $usrVault[$i]['operation'] = $entry->title;
-      $usrVault[$i]['amount']    = $entry->data->withdrawn;
-
-      $csvComp = searchForId($entry->timestamp, $csv);
-
-      if ($csvComp) {
-        //echo 'Withdrawal (ID: ' . $entry->timestamp . ') already in vault';
-      }
-
-      // fputcsv($fp, $usrVault[i]);
+      $usrVault[$i]['amount']    = '-'.$entry->data->withdrawn;
     } elseif ($entry->log == 5850) {
       $usrVault[$i]['user']      = $user;
       $usrVault[$i]['timestamp'] = $entry->timestamp;
       $usrVault[$i]['operation'] = $entry->title;
       $usrVault[$i]['amount']    = $entry->data->deposited;
-
-      $csvComp = searchForId($entry->timestamp, $csv);
-
-      if ($csvComp) {
-        //echo 'Deposit (ID: ' . $entry->timestamp . ') already in vault';
-      }
     } else {
       continue;
     }
