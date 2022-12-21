@@ -21,16 +21,7 @@ Uses the [Torn API](https://www.torn.com/api.html) to pul the most recent vault 
 
 ### Automating the API requests (TK)
 
-## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
-
 ## Authors
-
-Contributors names and contact info
 
 Keith Solomon
 [KeithSolomon.net](https://keithsolomon.net/)
