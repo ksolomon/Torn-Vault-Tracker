@@ -120,4 +120,62 @@ function getLog($user, $csv) {
   return $usrVault;
 }
 
+// vaultTxns(): Show all vault transactions
+function vaultTxns($csv) {
+  $output = '';
+
+  $output .= '<table>';
+  $output .= '  <thead>';
+  $output .= '    <td>User</td>';
+  $output .= '    <td>Timestamp</td>';
+  $output .= '    <td>Operation</td>';
+  $output .= '    <td>Amount</td>';
+  $output .= '  </thead>';
+
+  $output .= '  <tbody>';
+
+    foreach ($csv as $entry) {
+      if ($entry[2] == 'Vault withdraw') {
+        $class = 'debit';
+      } else {
+        $class = 'credit';
+      }
+
+      $output .= '<tr class="' . $class . '">';
+      $output .= '<td>';
+      $output .= $entry[0];
+      $output .= '</td>';
+      $output .= '<td>';
+      $output .= date("d/m/Y", $entry[1]);
+      $output .= '</td>';
+      $output .= '<td>';
+      $output .= $entry[2];
+      $output .= '</td>';
+      $output .= '<td>';
+      $output .= formatMoney($entry[3]);
+      $output .= '</td>';
+      $output .= '</tr>';
+    }
+
+  $output .= '  </tbody>';
+
+  $output .= '</table>';
+
+  echo $output;
+}
+
+function splitVault(array $inputArray, string $fieldName, $fieldValue): array {
+  $firstArray = [];
+  $secondArray = [];
+
+  foreach ($inputArray as $item) {
+    if (isset($item[$fieldName]) && $item[$fieldName] == $fieldValue) {
+      $firstArray[] = $item;
+    } else {
+      $secondArray[] = $item;
+    }
+  }
+
+  return [$firstArray, $secondArray];
+}
 ?>

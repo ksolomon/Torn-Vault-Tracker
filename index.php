@@ -21,43 +21,18 @@ include('functions.php');
 		<div class="gridLeft">
 			<h2>Transactions</h2>
 
-			<table>
-				<thead>
-					<td>User</td>
-					<td>Timestamp</td>
-					<td>Operation</td>
-					<td>Amount</td>
-				</thead>
-
-				<?php
-				foreach ($csv as $entry) {
-					if ($entry[2] == 'Vault withdraw') {
-						$class = 'debit';
-					} else {
-						$class = 'credit';
-					}
-
-					echo '<tr class="' . $class . '">';
-					echo '<td>';
-					echo $entry[0];
-					echo '</td>';
-					echo '<td>';
-					echo date("d/m/Y", $entry[1]);
-					echo '</td>';
-					echo '<td>';
-					echo $entry[2];
-					echo '</td>';
-					echo '<td>';
-					echo formatMoney($entry[3]);
-					echo '</td>';
-					echo '</tr>';
-				}
-				?>
-			</table>
+			<?php vaultTxns($csv); ?>
 		</div>
 
 		<div class="gridRght">
 			<h2>Balances</h2>
+
+			<?php
+			$zarVault = [];
+			$symVault = [];
+
+			
+			?>
 		</div>
 	</div>
 </body>
