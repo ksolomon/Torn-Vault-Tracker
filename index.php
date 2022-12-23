@@ -28,10 +28,11 @@ include('functions.php');
 			<h2>Balances</h2>
 
 			<?php
-			$zarVault = [];
-			$symVault = [];
+			$result = splitVault($csv,'0','Zarathos');
 
-			
+			echo '<pre>';
+			print_r($result);
+			echo '</pre>';
 			?>
 		</div>
 	</div>

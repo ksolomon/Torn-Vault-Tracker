@@ -37,14 +37,6 @@ foreach ($csvVault as $fields) {
 
 fclose($fp);
 
-// Sort the CSV array
-usort($csv, "custom_sort");
-
-// Define the custom sort function
-function custom_sort($a, $b) {
-  return $a[1] > $b[1];
-}
-
 // searchForID(): Serach CSV array for timestamp ID
 function searchForId($id, $array) {
   foreach ($array as $key => $val) {
@@ -143,16 +135,16 @@ function vaultTxns($csv) {
 
       $output .= '<tr class="' . $class . '">';
       $output .= '<td>';
-      $output .= $entry[0];
+      $output .= $entry[0]; // User
       $output .= '</td>';
       $output .= '<td>';
-      $output .= date("d/m/Y", $entry[1]);
+      $output .= date("d/m/Y", $entry[1]); // Transaction Date
       $output .= '</td>';
       $output .= '<td>';
-      $output .= $entry[2];
+      $output .= $entry[2]; // Transaction Type
       $output .= '</td>';
       $output .= '<td>';
-      $output .= formatMoney($entry[3]);
+      $output .= formatMoney($entry[3]); // Transaction Amount
       $output .= '</td>';
       $output .= '</tr>';
     }
@@ -164,18 +156,19 @@ function vaultTxns($csv) {
   echo $output;
 }
 
-function splitVault(array $inputArray, string $fieldName, $fieldValue): array {
-  $firstArray = [];
-  $secondArray = [];
+// splitVault(): split CSV array into two separate arrays based on the user
+function splitVault($csv, $field, $user): array {
+  $usr1Vault = [];
+  $usr2Vault = [];
 
-  foreach ($inputArray as $item) {
-    if (isset($item[$fieldName]) && $item[$fieldName] == $fieldValue) {
-      $firstArray[] = $item;
+  foreach ($csv as $entry) {
+    if (isset($entry[$field]) && $entry[$field] == $user) {
+      $usr1Vault[] = $entry;
     } else {
-      $secondArray[] = $item;
+      $usr2Vault[] = $entry;
     }
   }
 
-  return [$firstArray, $secondArray];
+  return [$usr1Vault, $usr2Vault];
 }
 ?>
