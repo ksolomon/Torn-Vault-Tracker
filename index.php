@@ -28,7 +28,7 @@
 			<h2>Vault Balance: </h2>
 
 			<div class="grid">
-				<?php vaultBalances($csv); ?>
+				<?php userBalances($csv); ?>
 			</div>
 		</div>
 	</div>
