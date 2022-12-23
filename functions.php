@@ -118,10 +118,10 @@ function vaultTxns($csv) {
 
   $output .= '<table>';
   $output .= '  <thead>';
-  $output .= '    <td>User</td>';
-  $output .= '    <td>Timestamp</td>';
-  $output .= '    <td>Operation</td>';
-  $output .= '    <td>Amount</td>';
+  $output .= '    <td><h4>User</h4></td>';
+  $output .= '    <td><h4>Timestamp</h4></td>';
+  $output .= '    <td><h4>Operation</h4></td>';
+  $output .= '    <td><h4>Amount</h4></td>';
   $output .= '  </thead>';
 
   $output .= '  <tbody>';
@@ -184,15 +184,24 @@ function userBalance($array, $field) {
 }
 
 function vaultBalances($csv) {
-  $usr1 = 'Zarathos';
-  $usr1Vault = splitVault($csv, '0', $usr1);
+  $usr1        = 'Zarathos';
+  $usr1Vault   = splitVault($csv, '0', $usr1);
   $usr1Balance = userBalance($usr1Vault,3);
+  $usr1Share   = formatMoney(500000000-$usr1Balance);
 
-  $usr2 = 'Symos';
-  $usr2Vault = splitVault($csv, '0', $usr2);
+  $usr2        = 'Symos';
+  $usr2Vault   = splitVault($csv, '0', $usr2);
   $usr2Balance = userBalance($usr2Vault,3);
+  $usr2Share   = formatMoney(500000000-$usr1Balance);
 
-  echo '<h3>'.$usr1.' balance: '.formatMoney($usr1Balance).'</h3>';
-  echo '<h3>'.$usr2.' balance: '.formatMoney($usr2Balance).'</h3>';
+  echo '<section class="user1">';
+  echo '  <h3>'.$usr1.' balance: '.formatMoney($usr1Balance).'</h3>';
+  echo '  <h4>'.$usr1.' share left: '.$usr1Share.'<h4>';
+  echo '</section>';
+
+  echo '<section class="user2">';
+  echo '  <h3>'.$usr2.' balance: '.formatMoney($usr2Balance).'</h3>';
+  echo '  <h4>'.$usr2.' share left: '.$usr2Share.'<h4>';
+  echo '</section>';
 }
 ?>

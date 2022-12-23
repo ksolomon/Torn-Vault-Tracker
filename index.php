@@ -17,15 +17,16 @@
 
 	<div class="grid">
 		<div class="gridLeft">
-			<h2>Transactions</h2>
+			<h1>Transactions</h1>
 
 			<?php vaultTxns($csv); ?>
 		</div>
 
 		<div class="gridRght">
-			<h2>Balances</h2>
+			<h1>Balances</h1>
 
-			<h3>Vault Balance: </h3>
+			<h2>Vault Balance: </h2>
+
 			<div class="grid">
 				<?php vaultBalances($csv); ?>
 			</div>
