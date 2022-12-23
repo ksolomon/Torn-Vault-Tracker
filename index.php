@@ -30,7 +30,7 @@
 			$usr2Vault = splitVault($csv, '0', 'Symos');
 
 			echo '<pre>';
-			print_r($usr1Vault);
+			print_r($usr2Vault);
 			echo '</pre>';
 			?>
 		</div>
