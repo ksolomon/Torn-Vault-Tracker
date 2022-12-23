@@ -1,9 +1,12 @@
 :root {
-  --red: #f77e82;
+  --red:   #f77e82;
   --green: #08817d;
 }
 
-body { padding: 0 1em; }
+body {
+  font-family: 'Roboto', sans-serif;
+  padding: 0 1em;
+}
 
 .grid {
   display: grid;
@@ -35,6 +38,8 @@ td { padding: .15em 1em; }
 
 h1 {  }
 
-h3, h4 { margin: 0; }
+.vault h2, h3, h4 { margin: 0; }
 
-h4 { font-style: italic; }
+.vault h3, h4 { font-style: italic; }
+
+.vault { margin: 0 0 1em; }

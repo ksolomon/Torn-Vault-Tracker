@@ -185,7 +185,13 @@ function arrBalance($array, $field) {
 
 // vaultBalance(): Calculate overall vault balance
 function vaultBalance($csv) {
+  $vaultBalance = arrBalance($csv,3);
+  $vaultSpace   = formatMoney(1000000000-$vaultBalance);
 
+  echo '<section class="vault">';
+  echo '  <h2>Vault Balance: '.formatMoney($vaultBalance).'</h2>';
+  echo '  <h3>Vault space left: '.$vaultSpace.'</h3>';
+  echo '</section>';
 }
 
 // userBalances(): Calculate per-user vault balances
@@ -198,16 +204,16 @@ function userBalances($csv) {
   $usr2        = 'Symos';
   $usr2Vault   = splitVault($csv, '0', $usr2);
   $usr2Balance = arrBalance($usr2Vault,3);
-  $usr2Share   = formatMoney(500000000-$usr1Balance);
+  $usr2Share   = formatMoney(500000000-$usr2Balance);
 
   echo '<section class="user1">';
   echo '  <h3>'.$usr1.' balance: '.formatMoney($usr1Balance).'</h3>';
-  echo '  <h4>'.$usr1.' share left: '.$usr1Share.'<h4>';
+  echo '  <h4>'.$usr1.' share left: '.$usr1Share.'</h4>';
   echo '</section>';
 
   echo '<section class="user2">';
   echo '  <h3>'.$usr2.' balance: '.formatMoney($usr2Balance).'</h3>';
-  echo '  <h4>'.$usr2.' share left: '.$usr2Share.'<h4>';
+  echo '  <h4>'.$usr2.' share left: '.$usr2Share.'</h4>';
   echo '</section>';
 }
 ?>

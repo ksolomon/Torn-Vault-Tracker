@@ -10,6 +10,10 @@
 	<title>Torn Vault Tracker</title>
 
 	<link rel="stylesheet" href="style.css?v=<?php echo filemtime('style.css'); ?>">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -25,7 +29,8 @@
 		<div class="gridRght">
 			<h1>Balances</h1>
 
-			<h2>Vault Balance: </h2>
+
+			<?php vaultBalance($csv); ?>
 
 			<div class="grid">
 				<?php userBalances($csv); ?>
