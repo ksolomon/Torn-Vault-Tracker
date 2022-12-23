@@ -184,13 +184,15 @@ function userBalance($array, $field) {
 }
 
 function vaultBalances($csv) {
-  $usr1Vault = splitVault($csv, '0', 'Zarathos');
-  $usr2Vault = splitVault($csv, '0', 'Symos');
-
+  $usr1 = 'Zarathos';
+  $usr1Vault = splitVault($csv, '0', $usr1);
   $usr1Balance = userBalance($usr1Vault,3);
+
+  $usr2 = 'Symos';
+  $usr2Vault = splitVault($csv, '0', $usr2);
   $usr2Balance = userBalance($usr2Vault,3);
 
-  echo '<h3>Zarathos balance: '.formatMoney($usr1Balance).'</h3>';
-  echo '<h3>Symos balance: '.formatMoney($usr2Balance).'</h3>';
+  echo '<h3>'.$usr1.' balance: '.formatMoney($usr1Balance).'</h3>';
+  echo '<h3>'.$usr2.' balance: '.formatMoney($usr2Balance).'</h3>';
 }
 ?>
