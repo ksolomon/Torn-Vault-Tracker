@@ -116,7 +116,7 @@ function getLog($user, $csv) {
 function vaultTxns($csv) {
   $output = '';
 
-  $output .= '<table>';
+  $output .= '<table id="data">';
   $output .= '  <thead>';
   $output .= '    <td><h4>User</h4></td>';
   $output .= '    <td><h4>Timestamp</h4></td>';
