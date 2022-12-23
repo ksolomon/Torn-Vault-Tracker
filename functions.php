@@ -172,8 +172,8 @@ function splitVault($csv, $field, $user): array {
   return $usr1Vault;
 }
 
-// Calculate user balances
-function userBalance($array, $field) {
+// Calculate balance of arrays
+function arrBalance($array, $field) {
   $total = 0;
 
   foreach ($array as $item) {
@@ -183,15 +183,16 @@ function userBalance($array, $field) {
   return $total;
 }
 
+// Calculate user balances
 function vaultBalances($csv) {
   $usr1        = 'Zarathos';
   $usr1Vault   = splitVault($csv, '0', $usr1);
-  $usr1Balance = userBalance($usr1Vault,3);
+  $usr1Balance = arrBalance($usr1Vault,3);
   $usr1Share   = formatMoney(500000000-$usr1Balance);
 
   $usr2        = 'Symos';
   $usr2Vault   = splitVault($csv, '0', $usr2);
-  $usr2Balance = userBalance($usr2Vault,3);
+  $usr2Balance = arrBalance($usr2Vault,3);
   $usr2Share   = formatMoney(500000000-$usr1Balance);
 
   echo '<section class="user1">';
