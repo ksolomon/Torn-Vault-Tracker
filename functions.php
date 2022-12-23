@@ -172,7 +172,7 @@ function splitVault($csv, $field, $user): array {
   return $usr1Vault;
 }
 
-// Calculate balance of arrays
+// arrBalance(): Calculate balance of arrays
 function arrBalance($array, $field) {
   $total = 0;
 
@@ -183,7 +183,12 @@ function arrBalance($array, $field) {
   return $total;
 }
 
-// Calculate user balances
+// vaultBalance(): Calculate overall vault balance
+function vaultBalance($csv) {
+
+}
+
+// userBalances(): Calculate per-user vault balances
 function userBalances($csv) {
   $usr1        = 'Zarathos';
   $usr1Vault   = splitVault($csv, '0', $usr1);
