@@ -29,9 +29,7 @@
 			$usr1Vault = splitVault($csv, '0', 'Zarathos');
 			$usr2Vault = splitVault($csv, '0', 'Symos');
 
-			echo '<pre>';
-			print_r($usr2Vault);
-			echo '</pre>';
+			
 			?>
 		</div>
 	</div>
