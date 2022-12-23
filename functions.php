@@ -126,6 +126,8 @@ function vaultTxns($csv) {
 
   $output .= '  <tbody>';
 
+  $csv = array_reverse($csv);
+
     foreach ($csv as $entry) {
       if ($entry[2] == 'Vault withdraw') {
         $class = 'debit';

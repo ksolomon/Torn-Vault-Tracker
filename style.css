@@ -4,6 +4,8 @@
 }
 
 body {
+  background: #000;
+  color: #fff;
   font-family: 'Roboto', sans-serif;
   padding: 0 1em;
 }
@@ -16,7 +18,7 @@ body {
   grid-row-gap: 0px;
 }
 
-table {width: 100%; }
+table { color: #000; width: 100%; }
 
 table, tr, td {
   border: 1px solid #333;
@@ -24,6 +26,8 @@ table, tr, td {
 }
 
 thead td {
+  background: #ccc;
+  color: #000;
   font-weight: bold;
   padding: .15em 1em;
   text-align: center;
