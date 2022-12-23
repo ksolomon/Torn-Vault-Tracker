@@ -26,10 +26,11 @@
 			<h2>Balances</h2>
 
 			<?php
-			$result = splitVault($csv,'0','Zarathos');
+			$usr1Vault = splitVault($csv, '0', 'Zarathos');
+			$usr2Vault = splitVault($csv, '0', 'Symos');
 
 			echo '<pre>';
-			print_r($result);
+			print_r($usr1Vault);
 			echo '</pre>';
 			?>
 		</div>

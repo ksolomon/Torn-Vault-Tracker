@@ -158,17 +158,28 @@ function vaultTxns($csv) {
 
 // splitVault(): split CSV array into two separate arrays based on the user
 function splitVault($csv, $field, $user): array {
-  $usr1Vault = [];
+  $usrVault = [];
   $usr2Vault = [];
 
   foreach ($csv as $entry) {
     if (isset($entry[$field]) && $entry[$field] == $user) {
       $usr1Vault[] = $entry;
     } else {
-      $usr2Vault[] = $entry;
+      continue;
     }
   }
 
-  return [$usr1Vault, $usr2Vault];
+  return $usr1Vault;
+}
+
+// Calculate user balances
+function userBalance($array, $field) {
+  $total = 0;
+
+  foreach ($array as $item) {
+    $total += $item[$field];
+  }
+
+  return $total;
 }
 ?>
