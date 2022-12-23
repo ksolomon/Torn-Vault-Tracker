@@ -25,12 +25,18 @@
 		<div class="gridRght">
 			<h2>Balances</h2>
 
-			<?php
-			$usr1Vault = splitVault($csv, '0', 'Zarathos');
-			$usr2Vault = splitVault($csv, '0', 'Symos');
+			<div class="grid">
+				<?php
+				$usr1Vault = splitVault($csv, '0', 'Zarathos');
+				$usr2Vault = splitVault($csv, '0', 'Symos');
 
-			
-			?>
+				$usr1Balance = userBalance($usr1Vault,3);
+				$usr2Balance = userBalance($usr2Vault,3);
+
+				echo '<h3>Zarathos balance: '.formatMoney($usr1Balance).'</h3>';
+				echo '<h3>Symos balance: '.formatMoney($usr2Balance).'</h3>';
+				?>
+			</div>
 		</div>
 	</div>
 </body>
