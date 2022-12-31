@@ -14,18 +14,19 @@ Uses the [Torn API](https://www.torn.com/api.html) to pul the most recent vault 
 
 ### Installing
 
-* Create folder in your server's web root, for example, 'tvt'
-* Upload/clone this repo into your folder
-* Edit `functions.php` to add API keys for you and your spouse
-* Open the tracker in any web browser
-* Style as you see fit in style.css (Optional, but if you make something cool, let ms know!)
+* Create folder in your server's web root, for example, 'tvt'.
+* Upload/clone this repo into your folder.
+* Edit `functions.php` to add API keys and Torn user names for you and your spouse.
+* Open the tracker in any web browser.
+* Style as you see fit in style.css (Optional, but if you make something cool, let me know!).
 
-### Automating the API requests (TK)
+### Automating transaction updates
+
+I recommend using an external site monitoring service such as [cronitor.io](https://cronitor.io) set to check the URL of your server.  A check rate of 15 minutes should be more than enough, since you can always force a refresh by simply opening the site in your browser.
 
 ## Authors
 
-Keith Solomon
-[ZarathosX75](https://www.torn.com/profiles.php?XID=2606457) on [Torn](https://torn.com/)
+Keith Solomon / [ZarathosX75](https://www.torn.com/profiles.php?XID=2606457) on [Torn](https://torn.com/)
 
 ## Version History
 

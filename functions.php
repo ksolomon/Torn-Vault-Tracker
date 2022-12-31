@@ -14,9 +14,9 @@ foreach ($lines as $key => $value) {
   $csv[$key] = str_getcsv($value);
 }
 
-// Get user log entries
-$zarTxn = getLog('zarathos', $csv);
-$symTxn = getLog('symos', $csv);
+// Get user log entries.  Change 'user1' and 'user2' below to Torn usernames.
+$user1Txn = getLog('user1', $csv);
+$user2Txn = getLog('user2', $csv);
 
 // Merge user arrays into transaction array
 $txnVault = array_merge($zarTxn, $symTxn);
@@ -74,16 +74,18 @@ function formatMoney($number, $cents = 1) {
 }
 
 // getLog(): Get log entries for user. Returns array.
+// Change 'user1' and 'user2' below to Torn usernames
+// Change 'user1Key' and 'user2Key' below to Torn API keys
 function getLog($user, $csv) {
   $tornURL = 'https://api.torn.com/user/?selections=log&key=';
   $i = 0;
 
-  if ($user == 'zarathos') {
-    $usrKey = 'LDtibInYMdgVnM9n';
-    $user = 'Zarathos';
+  if ($user == 'user1') {
+    $usrKey = 'user1Key';
+    $user = 'User1';
   } else {
-    $usrKey = 'lne9TZLuqvFXtK3V';
-    $user = 'Symos';
+    $usrKey = 'user2Key';
+    $user = 'User2';
   }
 
   $usrURL = $tornURL . $usrKey;
