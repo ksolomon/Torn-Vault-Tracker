@@ -4,7 +4,7 @@ Track vault balances for shared private island vaults in [Torn City](https://tor
 
 ## Description
 
-Uses the [Torn API](https://www.torn.com/api.html) to pul the most recent vault transactions for you and your spouse.  Note that in ordder to acess the "Log" endpoint, the keys used must be created with Full Access permissions.
+Uses the [Torn API](https://www.torn.com/api.html) to pul the most recent vault transactions for you and your spouse.  Note that in order to access the "Log" endpoint, the keys used must be created with Full Access permissions.
 
 ## Getting Started
 
