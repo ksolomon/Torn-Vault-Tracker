@@ -25,7 +25,7 @@ Uses the [Torn API](https://www.torn.com/api.html) to pul the most recent vault 
 ## Authors
 
 Keith Solomon
-[(ZarathosX75](https://www.torn.com/profiles.php?XID=2606457) on Torn)
+[ZarathosX75](https://www.torn.com/profiles.php?XID=2606457) on [Torn](https://torn.com/)
 
 ## Version History
 
