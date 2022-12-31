@@ -1,4 +1,11 @@
 <?php
+// Set usernames and keys here
+const USER1_KEY = 'user1Key';
+const USER1_NAME = 'user1';
+const USER2_KEY = 'user2Key';
+const USER2_NAME = 'user2';
+
+// Set locale for monetary functions.
 setlocale(LC_MONETARY, "en_US");
 
 // Open CSV file in read & append mode ('a+')
@@ -14,12 +21,12 @@ foreach ($lines as $key => $value) {
   $csv[$key] = str_getcsv($value);
 }
 
-// Get user log entries.  Change 'user1' and 'user2' below to Torn usernames.
-$user1Txn = getLog('user1', $csv);
-$user2Txn = getLog('user2', $csv);
+// Get user log entries.
+$user1Txn = getLog(USER1_NAME, $csv);
+$user2Txn = getLog(USER2_NAME, $csv);
 
 // Merge user arrays into transaction array
-$txnVault = array_merge($zarTxn, $symTxn);
+$txnVault = array_merge($user1Txn, $user2Txn);
 
 // Build array of entries not already in the CSV
 foreach ($txnVault as $key => $value) {
@@ -74,18 +81,16 @@ function formatMoney($number, $cents = 1) {
 }
 
 // getLog(): Get log entries for user. Returns array.
-// Change 'user1' and 'user2' below to Torn usernames
-// Change 'user1Key' and 'user2Key' below to Torn API keys
 function getLog($user, $csv) {
   $tornURL = 'https://api.torn.com/user/?selections=log&key=';
   $i = 0;
 
-  if ($user == 'user1') {
-    $usrKey = 'user1Key';
-    $user = 'User1';
+  if ($user == USER1_NAME) {
+    $usrKey = USER1_KEY;
+    $user = USER1_NAME;
   } else {
-    $usrKey = 'user2Key';
-    $user = 'User2';
+    $usrKey = USER2_KEY;
+    $user = USER2_NAME;
   }
 
   $usrURL = $tornURL . $usrKey;
