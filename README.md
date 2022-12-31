@@ -17,8 +17,12 @@ Uses the [Torn API](https://www.torn.com/api.html) to pul the most recent vault 
 * Create folder in your server's web root, for example, 'tvt'.
 * Upload/clone this repo into your folder.
 * Edit `functions.php` to add API keys and Torn user names for you and your spouse.
+* Edit `vault.csv` to set initial balances for each user (see notes below).
 * Open the tracker in any web browser.
-* Style as you see fit in style.css (Optional, but if you make something cool, let me know!).
+* Style as you see fit in `style.css` (Optional, but if you make something cool, let me know!).
+
+### Initial vault balance(s)
+Currently, there's no way to get past vault transactions via the API.  If you're starting new, you can use the vault balance before your spouse adds their first deposit.  For existing vaults, you'll need to figure out the balances the hard way.  Once you have the balances, put them into the `vault.csv` with the proper user names.  The timestamp field doesn't matter, and can be left at the currnet value.
 
 ### Automating transaction updates
 
