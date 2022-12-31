@@ -18,13 +18,14 @@ Uses the [Torn API](https://www.torn.com/api.html) to pul the most recent vault 
 * Upload/clone this repo into your folder
 * Edit `functions.php` to add API keys for you and your spouse
 * Open the tracker in any web browser
+* Style as you see fit in style.css (Optional, but if you make something cool, let ms know!)
 
 ### Automating the API requests (TK)
 
 ## Authors
 
 Keith Solomon
-[KeithSolomon.net](https://keithsolomon.net/)
+[ZarathosX75](https://www.torn.com/profiles.php?XID=2606457)
 
 ## Version History
 
