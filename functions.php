@@ -1,8 +1,9 @@
 <?php
 // Set usernames and keys here
 const USER1_KEY = 'user1Key';
-const USER1_NAME = 'user1';
 const USER2_KEY = 'user2Key';
+
+const USER1_NAME = 'user1';
 const USER2_NAME = 'user2';
 
 // Set locale for monetary functions.
